@@ -58,8 +58,6 @@ export default {
 
         if (!digits.length) return 0
 
-        console.log(digits, this.parseDigit(digits[0][1]) + this.parseDigit(digits[digits.length - 1][1]))
-
         return parseInt(
             this.parseDigit(digits[0][1]) + this.parseDigit(digits[digits.length - 1][1])
         )
