@@ -4,7 +4,7 @@ export default {
     resultSelector: 'result',
     inputEvent: 'input',
     fileEncoding: 'UTF-8',
-    regex: /\d/g,
+    regex: /\d/gm,
 
     /**
      * Map human-readable digits to their values
@@ -70,7 +70,7 @@ export default {
      */
     formatLine (line) {
         // Replace human-readable digits
-        for (const [key, value] of Object.entries(this.humanDigitMapping)) {
+        for (const [key, value] of Object.entries(this.humanDigitMapping).reverse()) {
             line = line.replaceAll(key, value.toString())
         }
 
