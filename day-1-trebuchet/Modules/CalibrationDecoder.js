@@ -4,7 +4,7 @@ export default {
     resultSelector: 'result',
     inputEvent: 'input',
     fileEncoding: 'UTF-8',
-    regex: /\d/gm,
+    regex: /(?=(\d|one|two|three|four|five|six|seven|eight|nine))/g,
 
     /**
      * Map human-readable digits to their values
@@ -54,27 +54,26 @@ export default {
      * @returns {number}
      */
     decodeLine (line) {
-        const digits = this.formatLine(line)
-            .match(this.regex)
+        const digits = Array.from(line.matchAll(this.regex))
 
         if (!digits.length) return 0
 
-        return parseInt(digits[0] + digits[digits.length - 1])
+        console.log(digits, this.parseDigit(digits[0][1]) + this.parseDigit(digits[digits.length - 1][1]))
+
+        return parseInt(
+            this.parseDigit(digits[0][1]) + this.parseDigit(digits[digits.length - 1][1])
+        )
     },
 
     /**
-     * Format line for decoding.
+     * Parse digit
      *
-     * @param {string} line
-     * @returns string
+     * @param {string|number} digit
+     * @returns {string}
      */
-    formatLine (line) {
-        // Replace human-readable digits
-        for (const [key, value] of Object.entries(this.humanDigitMapping).reverse()) {
-            line = line.replaceAll(key, value.toString())
-        }
-
-        return line
+    parseDigit (digit) {
+        if (/\d/.test(digit)) return digit
+        return this.humanDigitMapping[digit].toString()
     },
 
     /**
