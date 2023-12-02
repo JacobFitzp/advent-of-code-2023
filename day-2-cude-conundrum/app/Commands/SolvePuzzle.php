@@ -2,8 +2,9 @@
 
 namespace App\Commands;
 
+use App\Foundation\Puzzle\FewestCubesSolver;
 use LaravelZero\Framework\Commands\Command;
-use App\Foundation\Puzzle\PuzzleSolver;
+use App\Foundation\Puzzle\PossibleGamesSolver;
 use SplFileObject;
 
 class SolvePuzzle extends Command
@@ -37,6 +38,11 @@ class SolvePuzzle extends Command
             return;
         }
 
+        $solver = $this->output->choice('How should the puzzle be solved?', [
+            PossibleGamesSolver::class => 'Sum of possible game IDs',
+            FewestCubesSolver::class => 'Sum of power of fewest number of cubes',
+        ]);
+
         // Open the puzzle input file
         $file = new SplFileObject($puzzleInputPath);
 
@@ -48,7 +54,7 @@ class SolvePuzzle extends Command
         $file->rewind();
 
         // Initialize the puzzle solver
-        $solver = new PuzzleSolver();
+        $solver = new $solver;
 
         // Display progress bar
         $this->output->progressStart($lineCount);
