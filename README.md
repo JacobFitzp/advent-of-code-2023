@@ -14,6 +14,6 @@ You can test with the provided `calibration-data.txt` file.
 
 Install dependencies `composer install` and run `php application solve-puzzle` and follow the prompts.
 
-You can test with the provided `puzzles.txt` file. testing
+You can test with the provided `puzzles.txt` file. testingFF
 
 
